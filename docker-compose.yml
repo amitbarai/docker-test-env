@@ -11,6 +11,7 @@ services:
       - "8080:8080"
     volumes:
       - /app/docker/jenkins/data:/var/jenkins_home
+	  - /app/docker/jenkins.war:/usr/share/jenkins/jenkins.war
     networks:
       - Jenkinsnet
     links:
