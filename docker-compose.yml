@@ -2,16 +2,15 @@ version: '3'
 
 services:
   jenkins:
-    image: jenkins
+    image: amitbarai/myjenkins
     user: root
     environment:
       - JENKINS_SLAVE_AGENT_PORT=50001
     container_name: myjenkins
     ports:
-      - "8080:8080"
+      - "80:8080"
     volumes:
       - /app/docker/jenkins/data:/var/jenkins_home
-	  - /app/docker/jenkins.war:/usr/share/jenkins/jenkins.war
     networks:
       - Jenkinsnet
     links:
@@ -19,7 +18,7 @@ services:
       - tomcat-prod
 
   tomcat-dev:
-    image: tomcat:8.0
+    image: amitbarai/mytomcat
     container_name: tomcat-dev
     volumes:
       - vol-dev
@@ -29,7 +28,7 @@ services:
      - "8081:8080"
 
   tomcat-prod:
-    image: tomcat:8.0
+    image: amitbarai/mytomcat
     container_name: tomcat-prod
     volumes:
       - vol-prod
