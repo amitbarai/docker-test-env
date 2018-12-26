@@ -24,10 +24,10 @@ docker_practice_ubuntu() {
                         software-properties-common
                         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 						sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-                        apt-get -y update && apt-get -y install docker-ce docker-compose
+                        apt-get -y update && apt-get -y install docker-ce docker-compose gnupg2 pass
                         systemctl start docker
-                        mkdir -p /app/{docker/{jenkins/data,tomcat-prod/data,tomcat-dev/data,testing},composetest,backup.`date +%Y%m%d`}  
-						cd /app && 	wget https://updates.jenkins-ci.org/download/war/2.150.1/jenkins.war
+#                       mkdir -p /app/{docker/{jenkins/data,tomcat-prod/data,tomcat-dev/data,testing},composetest,backup.`date +%Y%m%d`} 
+						mkdir -p /app/docker/jenkins/data && cd /app/docker/jenkins && wget https://updates.jenkins-ci.org/download/war/2.150.1/jenkins.war
 }
 lxc_practice_ubuntu() {
 						apt -y install lxc lxc-templates sshpass
@@ -49,9 +49,8 @@ git_practice_ubuntu() {
 						}
 case $myos in 
 				ubuntu) docker_practice_ubuntu
-						git_practice_ubuntu;;
+					git_practice_ubuntu;;
 				
-					 *)  echo "os not supported"
-						 exit;;
+				     *)  echo "os not supported"
+					exit;;
 esac 
-
