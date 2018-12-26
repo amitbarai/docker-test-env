@@ -1,3 +1,5 @@
 FROM jenkins
 COPY jenkins.war /usr/share/jenkins/jenkins.war
+USER root
+RUN apt-get update -y && apt-get install maven git -y
 EXPOSE 8080
