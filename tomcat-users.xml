@@ -1,4 +1,4 @@
-# cat /usr/local/tomcat/conf/tomcat-users.xml
+<!-- # cat /usr/local/tomcat/conf/tomcat-users.xml -->
 <?xml version='1.0' encoding='utf-8'?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
