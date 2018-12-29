@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  jenkins:
+    image: amitbarai/myjenkins
+    deploy:
+      replicas: 1
+      resources:
+        limits: 
+          memory: 400m
+        reservations:
+          memory: 200m
+      restart_policy:
+        condition: on-failure    
+    user: root
+    environment:
+      - JENKINS_SLAVE_AGENT_PORT=50001
+    container_name: myjenkins
+    ports:
+      - "80:8080"
+    volumes:
+      - /app/docker/jenkins/data:/var/jenkins_home
+    networks:
+      - Jenkinsnet
+
+networks:
+  Jenkinsnet:
+    driver: bridge
+
