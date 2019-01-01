@@ -27,7 +27,8 @@ docker_practice_ubuntu() {
                         apt-get -y update && apt-get -y install docker-ce docker-compose gnupg2 pass
                         systemctl start docker
 #                       mkdir -p /app/{docker/{jenkins/data,tomcat-prod/data,tomcat-dev/data,testing},composetest,backup.`date +%Y%m%d`} 
-						mkdir -p /app/docker/jenkins/data && cd /app/docker/jenkins && wget https://updates.jenkins-ci.org/download/war/2.150.1/jenkins.war
+#						mkdir -p /app/docker/jenkins/data && cd /app/docker/jenkins  && wget https://updates.jenkins-ci.org/download/war/2.150.1/jenkins.war
+						mkdir -p /app/docker/jenkins/data 
 }
 lxc_practice_ubuntu() {
 						apt -y install lxc lxc-templates sshpass
@@ -46,11 +47,13 @@ lxc_practice_ubuntu() {
 
 git_practice_ubuntu() {
 						apt-get install git
+						cd /app/docker && git clone https://github.com/amitbarai/docker-test-env.git
 						}
+		
 case $myos in 
 				ubuntu) docker_practice_ubuntu
-					git_practice_ubuntu;;
+						git_practice_ubuntu;;
 				
-				     *)  echo "os not supported"
-					exit;;
+					 *)  echo "os not supported"
+						 exit;;
 esac 
