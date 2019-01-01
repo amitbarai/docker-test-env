@@ -28,17 +28,16 @@ services:
       - /app/docker/jenkins/data:/var/jenkins_home
     networks:
       - Jenkinsnet
-
-        
+      
   tomcat-dev:
     image: amitbarai/mytomcat
-    container_name: tomcat-dev  # This is ignored by docker-compose up and docker stack deoploy 
-    deploy:                     # This only takes effect deploying to a swarm with docker stack deploy, and ignored by docker-compose.
-      restart_policy:           # Configures if and how to restart containers when they exit
-        condition: on-failure   # One of none, on-failure or any (default: any).
-        delay: 10s              # How long to wait between restart attempts, specified as a duration (default: 0).
-        max_attempts: 3         # How many times to attempt to restart a container before giving up
-        window: 30s             # How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
+    container_name: tomcat-dev  
+    deploy:                     
+      restart_policy:           
+        condition: on-failure   
+        delay: 10s              
+        max_attempts: 3         
+        window: 30s             
       resources:       
         limits:
           memory: 150m
@@ -53,11 +52,32 @@ services:
     ports:
      - "8081:8080"
 
+  tomcat-prod:
+    image: amitbarai/mytomcat
+    container_name: tomcat-prod  
+    deploy:                     
+      restart_policy:           
+        condition: on-failure   
+        delay: 10s              
+        max_attempts: 3         
+        window: 30s             
+      resources:       
+        limits:
+          memory: 100m
+          cpus: '0.25'
+        reservations:
+          cpus: '0.25'
+          memory: 50m
+    volumes:
+      - vol-prod:/usr/local/tomcat 
+    networks:
+      - Jenkinsnet
+    ports:
+     - "8082:8080"
 
 networks:
   Jenkinsnet:
     driver: overlay
-
 
 volumes:
   vol-dev:
