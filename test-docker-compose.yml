@@ -1,18 +1,23 @@
 version: '3.3'
 
 services:
-  jenkins:
+  myjenkins:
     image: amitbarai/myjenkins
-    container_name: myjenkins
+    container_name: myjenkins  # This is ignored by docker-compose up and docker stack deoploy
     deploy:
       replicas: 1
-      resources:
-        limits: 
-          memory: 400m
+      resources:               # Configures resource constraints in version 3 (cpu_shares, cpu_quota, cpuset, mem_limit, memswap_limit, mem_swappiness 
+        limits:         
+          memory: 300m
+          cpus: '0.50'
         reservations:
-          memory: 200m
-      restart_policy:
-        condition: on-failure    
+          cpus: '0.25'
+          memory: 150m
+      restart_policy:          # Configures if and how to restart containers when they exit
+        condition: on-failure  # One of none, on-failure or any (default: any).  
+        delay: 30s             # How long to wait between restart attempts, specified as a duration (default: 0).
+        max_attempts: 3        # How many times to attempt to restart a container before giving up
+        window: 120s           # How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
     user: root
     environment:
       - JENKINS_SLAVE_AGENT_PORT=50001
@@ -23,27 +28,36 @@ services:
       - /app/docker/jenkins/data:/var/jenkins_home
     networks:
       - Jenkinsnet
+
+        
   tomcat-dev:
     image: amitbarai/mytomcat
-    container_name: tomcat-dev
+    container_name: tomcat-dev  # This is ignored by docker-compose up and docker stack deoploy 
+    deploy:                     # This only takes effect deploying to a swarm with docker stack deploy, and ignored by docker-compose.
+      restart_policy:           # Configures if and how to restart containers when they exit
+        condition: on-failure   # One of none, on-failure or any (default: any).
+        delay: 10s              # How long to wait between restart attempts, specified as a duration (default: 0).
+        max_attempts: 3         # How many times to attempt to restart a container before giving up
+        window: 30s             # How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
+      resources:       
+        limits:
+          memory: 150m
+          cpus: '0.25'
+        reservations:
+          cpus: '0.25'
+          memory: 50m
     volumes:
-      - vol-dev
+      - vol-dev:/usr/local/tomcat 
     networks:
       - Jenkinsnet
     ports:
      - "8081:8080"
-  tomcat-prod:
-    image: amitbarai/mytomcat
-    container_name: tomcat-prod
-    volumes:
-      - vol-prod
-    networks:
-      - Jenkinsnet
-    ports:
-      - "8082:8080"
+
+
 networks:
   Jenkinsnet:
     driver: overlay
+
 
 volumes:
   vol-dev:
