@@ -1,8 +1,8 @@
-version: '3.3'
+version: '3.3' # If no version is specified then v1 is assumed, 
 
-services:
-  myjenkins:
-    image: amitbarai/myjenkins
+services:                      # Containers. Same as docker run
+  myjenkins:                   # a friendly name, this is also DNS name inside network  
+    image: amitbarai/myjenkins # Optional if you use build:
     container_name: myjenkins  # This is ignored by docker-compose up and docker stack deoploy
     deploy:
       replicas: 1
@@ -24,9 +24,9 @@ services:
     container_name: myjenkins
     ports:
       - "80:8080"
-    volumes:
+    volumes:                   
       - /app/docker/jenkins/data:/var/jenkins_home
-    networks:
+    networks:                  # Optional, same as docker network create
       - Jenkinsnet
       
   tomcat-dev:
@@ -75,11 +75,11 @@ services:
     ports:
      - "8082:8080"
 
-networks:
+networks:                     # # Optional, same as docker network create
   Jenkinsnet:
     driver: overlay
 
-volumes:
+volumes:                       #  Optional, same as docker volume create
   vol-dev:
   vol-prod:
 
