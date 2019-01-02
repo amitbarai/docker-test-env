@@ -8,11 +8,11 @@ services:                      # Containers. Same as docker run
       replicas: 1
       resources:               # Configures resource constraints in version 3 (cpu_shares, cpu_quota, cpuset, mem_limit, memswap_limit, mem_swappiness 
         limits:         
-          memory: 300m
+          memory: 400m
           cpus: '0.50'
         reservations:
           cpus: '0.25'
-          memory: 150m
+          memory: 200m
       restart_policy:          # Configures if and how to restart containers when they exit
         condition: on-failure  # One of none, on-failure or any (default: any).  
         delay: 30s             # How long to wait between restart attempts, specified as a duration (default: 0).
@@ -37,7 +37,7 @@ services:                      # Containers. Same as docker run
         condition: on-failure   
         delay: 10s              
         max_attempts: 3         
-        window: 30s             
+        window: 60s             
       resources:       
         limits:
           memory: 150m
@@ -60,10 +60,10 @@ services:                      # Containers. Same as docker run
         condition: on-failure   
         delay: 10s              
         max_attempts: 3         
-        window: 30s             
+        window: 60s             
       resources:       
         limits:
-          memory: 100m
+          memory: 150m
           cpus: '0.25'
         reservations:
           cpus: '0.25'
