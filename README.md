@@ -1,4 +1,3 @@
-# docker-test-env
 docker-test-env
 ======================
 docker stack deploy --compose-file test-docker-compose.yml stackdemo
