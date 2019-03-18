@@ -2,40 +2,9 @@ docker-test-env
 ===============
 
 1. Run initial_script.sh to complete preinstallation tasks
-==========================================================
-
 2. Create docker swarm and Start containers
-===========================================
-
-3. Access running jenkins container url
-=======================================
-Access  http://<ip_addr>:80
-
-
-4. Follow processes for below Jenkins pipeline
-==============================================
-
-Install Plugins 
----------------
-copy artifact
-deploy to container
-github
-copy artifacts
-build pipeline
-
-Info
-----
-Jenkins war location	: /usr/share/jenkins/jenkins.war 
-Packages needed		: apt install git maven openjdk-8-jdk/stable mvn-3.3.9
-maven project repo	: https://github.com/jleetutorial/maven-project.git
-maven command to build 	: -Dmaven.test.skip=true clean package checkstyle:checkstyle
-maven commandline   	: mvn -Dmaven.test.skip=true clean package
-
-Tomcat manager details
-----------------------
-#<!-- <role rolename="manager-gui"/> -->
-#<!-- <user username="tomcat" password="tomcat" roles="manager-gui"/> -->
-
+3. Access running jenkins container url Access  http://<ip_addr>:80
+4. Follow processes in guide file for below Jenkins pipeline
 
 Pipeline Project
 =============================
@@ -58,4 +27,3 @@ Step 4  - Add "checkstyle" to parallel pipeline
 	- Add git repo in source code management https://github.com/jleetutorial/maven-project.git
 	- Add build action "invoke to level maven" with "checkstyle:checkstyle"
 	- Go to other project which will trigger this project add the post build action to trigger this project
-   
