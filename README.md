@@ -3,24 +3,13 @@ docker-test-env
 
 1. Run initial_script.sh to complete preinstallation tasks
 ==========================================================
-bash initial_script.sh
-
 
 2. Create docker swarm and Start containers
 ===========================================
-docker swarm init
-docker swarm join --token SWMTKN-1-...................................... <ip_address>:2377 # fire on second node
-docker node ls 										    # to know 2nd node id
-docker node update --role manager <node_id>						    # To give manager role
-docker stack deploy -c docker-compose.yml <stack_name>					    # To deploy stack
-docker service ls 									    # To know about running containers on all swarm nodes
-docker container exec -it <Container_ID> /bin/bash	    				    # To login to local container
-
 
 3. Access running jenkins container url
 =======================================
 Access  http://<ip_addr>:80
-docker container logs <Container_ID>  							    # Using will get authorisation string to login 
 
 
 4. Follow processes for below Jenkins pipeline
