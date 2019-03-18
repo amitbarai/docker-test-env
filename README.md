@@ -44,8 +44,8 @@ maven commandline   	: mvn -Dmaven.test.skip=true clean package
 
 Tomcat manager details
 ----------------------
-#<role rolename="manager-gui"/>
-#<user username="tomcat" password="tomcat" roles="manager-gui"/>
+#<!-- <role rolename="manager-gui"/> -->
+#<!-- <user username="tomcat" password="tomcat" roles="manager-gui"/> -->
 
 
 Pipeline Project
