@@ -1,0 +1,63 @@
+version: '3.3' # If no version is specified then v1 is assumed,
+
+services:                      # Containers. Same as docker run
+  myjenkins:                   # a friendly name, this is also DNS name inside network
+    image: amitbarai/myjenkins # Optional if you use build:
+    container_name: myjenkins  # This is ignored by docker-compose up and docker stack deoploy
+    deploy:
+      replicas: 1
+      resources:               # Configures resource constraints in version 3 (cpu_shares, cpu_quota, cpuset, mem_limit, memswap_limit, mem_swappiness
+        limits:
+          memory: 800m
+          cpus: '0.50'
+        reservations:
+          cpus: '0.25'
+          memory: 200m
+      restart_policy:          # Configures if and how to restart containers when they exit
+        condition: on-failure  # One of none, on-failure or any (default: any).
+        delay: 30s             # How long to wait between restart attempts, specified as a duration (default: 0).
+        max_attempts: 3        # How many times to attempt to restart a container before giving up
+        window: 120s           # How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
+    user: root
+    environment:
+      - JENKINS_SLAVE_AGENT_PORT=50001
+    container_name: myjenkins
+    ports:
+      - "80:8080"
+    volumes:
+      - /app/docker/jenkins/data:/var/jenkins_home
+    networks:                  # Optional, same as docker network create
+      - Jenkinsnet
+
+  tomcat-dev:
+    image: amitbarai/mytomcat
+    container_name: tomcat-dev
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 60s
+      resources:
+        limits:
+          memory: 600m
+          cpus: '0.25'
+        reservations:
+          cpus: '0.25'
+          memory: 100m
+    volumes:
+      - vol-dev:/usr/local/tomcat
+    networks:
+      - Jenkinsnet
+    ports:
+     - "8081:8080"
+
+
+networks:                      # Optional, same as docker network create
+  Jenkinsnet:
+    driver: overlay
+
+volumes:                       #  Optional, same as docker volume create
+  vol-dev:
+  vol-prod:
+
