@@ -39,12 +39,13 @@ Info
 Jenkins war location	: /usr/share/jenkins/jenkins.war 
 Packages needed		: apt install git maven openjdk-8-jdk/stable mvn-3.3.9
 maven project repo	: https://github.com/jleetutorial/maven-project.git
-maven command to build 	: mvn -Dmaven.test.skip=true clean package checkstyle:checkstyle
+maven command to build 	: -Dmaven.test.skip=true clean package checkstyle:checkstyle
+maven commandline   	: mvn -Dmaven.test.skip=true clean package
 
 Tomcat manager details
 ----------------------
-<role rolename="manager-gui"/>
-<user username="tomcat" password="tomcat" roles="manager-gui"/>
+#<role rolename="manager-gui"/>
+#<user username="tomcat" password="tomcat" roles="manager-gui"/>
 
 
 Pipeline Project
